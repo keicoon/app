@@ -22,6 +22,17 @@ EasyRestful.register('/before/:img', function (resolve, reject) {
     })
 });
 
+let pyProc = require('child_process').spawn('python3', [
+    path.join(__dirname, '../../src/', 'api.py'),
+    4242
+]);
+
+if (pyProc != null) {
+    console.log('child process success');
+} else {
+    console.error('fail to spawn PyProc');
+}
+
 const zerorpc = require("zerorpc");
 
 let zerorpc_client = new zerorpc.Client();
