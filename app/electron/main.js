@@ -32,7 +32,6 @@ app.on('activate', () => {
 })
 
 app.on('ready', () => {
-
     pyProc = require('child_process').spawn('python3', [
         path.join(__dirname, '../../src/', 'api.py'),
         4242

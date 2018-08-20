@@ -1,0 +1,11 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "keicoon",
+  "license": "MIT",
+  "dependencies": {
+    "easy-restful": "^1.0.0",
+    "zerorpc": "^0.9.7"
+  }
+}
