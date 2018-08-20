@@ -7,4 +7,19 @@ front-end application that showing face about before / after makeup.
 프론트엔드에서 WebApp 또는 rest-api로 메이크업 전 / 후 이미지를 요청할 수 있습니다.
 
 ## 어떻게 사용합니까?
-.
+- WebApp
+    - Mac
+```
+cd ./app/electron
+npm run auto-build
+cd dist/installer
+# Mac
+hdiutil attach ./MakeupApp.dmg
+# Win
+./MakeupApp.exe
+```
+- Rest-Server
+```
+cd ./app/server
+npm run start
+```
