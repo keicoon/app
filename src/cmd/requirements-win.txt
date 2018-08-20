@@ -1,0 +1,3 @@
+pip install zerorpc
+pip install pyinstaller
+pip install pypiwin32
