@@ -1,3 +1,5 @@
-pip install zerorpc
-pip install pyinstaller
-pip install pypiwin32
+zerorpc
+pyinstaller
+pypiwin32
+torch
+torchvision

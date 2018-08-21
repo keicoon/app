@@ -1,2 +1,4 @@
 zerorpc
 pyinstaller
+torch
+torchvision
