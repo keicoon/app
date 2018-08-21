@@ -23,7 +23,7 @@ EasyRestful.register('/before/:img', function (resolve, reject) {
 });
 
 let pyProc = require('child_process').spawn('python3', [
-    path.join(__dirname, '../../src/', 'api.py'),
+    path.join(__dirname, '../../src/test', 'api.py'),
     4242
 ]);
 
