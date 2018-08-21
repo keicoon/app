@@ -14,7 +14,7 @@ def preprocessing(data):
     return perf_data
 
 def loadModel(mnistModel):
-    path_pretrained_model = './pretraied_model.pt'
+    path_pretrained_model = './pretrained_mnist_model.pkl'
     model.load_state_dict(torch.load(path_pretrained_model))
     return model
 
@@ -25,6 +25,6 @@ def evaluation(text):
 
     model = loadModel(main())
 
-    predict_num = model(X)
+    predict_num = test(X, model)
 
     return predict_num
