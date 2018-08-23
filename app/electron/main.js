@@ -4,13 +4,10 @@ const BrowserWindow = electron.BrowserWindow;
 const ipcMain = electron.ipcMain;
 
 const url = require('url');
-const path = require('path');
 
-const zerorpc = require("zerorpc");
+const handler = require("handler_zerorpc")();
 
 let mainWindow;
-let pyProc;
-let zerorpc_client;
 
 app.on('Window-all-closed', () => {
     if (app.platform != 'darwin') {
@@ -19,10 +16,10 @@ app.on('Window-all-closed', () => {
 })
 
 app.on('will-quit', () => {
-    if (pyProc) {
-        pyProc.kill();
+    const server = handler.getServer();
+    if (server) {
+        server.kill();
     }
-    pyProc = null;
 })
 
 app.on('activate', () => {
@@ -32,16 +29,7 @@ app.on('activate', () => {
 })
 
 app.on('ready', () => {
-    pyProc = require('child_process').spawn('python3', [
-        path.join(__dirname, '../../src/test', 'api.py'),
-        4242
-    ]);
-
-    if (pyProc != null) {
-        console.log('child process success');
-    } else {
-        console.error('fail to spawn PyProc');
-    }
+    handler.run();
 
     mainWindow = new BrowserWindow({ width: 800, height: 600 });
 
@@ -54,17 +42,32 @@ app.on('ready', () => {
     // @TODO:
     mainWindow.webContents.openDevTools();
 
-    ipcMain.on('req::test', (event, arg) => {
+    ipcMain.on('req::test_calc', (event, arg) => {
         const { x, y } = JSON.parse(arg);
-        
+
         const z = `${x} + ${y}`;
 
-        zerorpc_client.invoke("calc", z, (error, res) => {
+        handler.getClient().invoke("calc", z, (error, res) => {
             if (error) {
                 console.error(error);
             } else {
                 console.log(res);
-                event.sender.send('res::test', JSON.stringify({ z: res }));
+                event.sender.send('res::test_calc', JSON.stringify({ z: res }));
+            }
+        })
+    })
+
+    ipcMain.on('req::test_mnist', (event, arg) => {
+        const { x, y } = JSON.parse(arg);
+
+        const z = `${x} + ${y}`;
+
+        handler.getClient().invoke("eval", z, (error, res) => {
+            if (error) {
+                console.error(error);
+            } else {
+                console.log(res);
+                event.sender.send('res::test_mnist', JSON.stringify({ z: res }));
             }
         })
     })
@@ -72,12 +75,4 @@ app.on('ready', () => {
     mainWindow.on('closed', () => {
         mainWindow = null;
     })
-
-    zerorpc_client = new zerorpc.Client();
-    zerorpc_client.connect("tcp://127.0.0.1:4242");
-    if (zerorpc_client != null) {
-        console.log('zerorpc_client success');
-    } else {
-        console.error('fail to spawn zerorpc_client');
-    }
 })
