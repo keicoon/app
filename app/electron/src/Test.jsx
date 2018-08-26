@@ -37,10 +37,18 @@ export default class Test extends Component {
         ipcRenderer && ipcRenderer.send("req::test_mnist", grayscaleImage);
     }
 
+    clearHandler() {
+        const src_canvas = this.drawingCanvas.handle;
+        const des_canvas = this.refs.des_canvas;
+        src_canvas.getContext('2d').clearRect(0, 0, src_canvas.width, src_canvas.height);
+        des_canvas.getContext('2d').clearRect(0, 0, des_canvas.width, des_canvas.height);
+    }
+
     render() {
         return (
             <div>
                 <button onClick={this.uploadHandler.bind(this)} >Upload!</button>
+                <button onClick={this.clearHandler.bind(this)} >Clear</button>
                 <br />
                 <DrawingCanvas width={128} height={128} ref={(node) => { this.drawingCanvas = node; }} />
                 <canvas width={28} height={28} ref='des_canvas' style={{ border: "1px solid #ddd" }} />
