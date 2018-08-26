@@ -41,7 +41,16 @@ export default class DrawingCanvas extends Component {
             const ctx = this.refs.canvas.getContext('2d');
             const { x, y } = this.getMousePosition(event);
 
-            ctx.lineTo(x, y);
+            ctx.lineTo(x - 1 , y - 1);
+            ctx.lineTo(x , y - 1);
+            ctx.lineTo(x + 1, y - 1);
+            ctx.lineTo(x - 1 , y);
+            ctx.lineTo(x , y);
+            ctx.lineTo(x + 1, y);
+            ctx.lineTo(x - 1 , y + 1);
+            ctx.lineTo(x , y + 1);
+            ctx.lineTo(x + 1, y + 1);
+
             ctx.stroke();
         }
     }
@@ -55,7 +64,7 @@ export default class DrawingCanvas extends Component {
 
     render() {
         return (
-            <canvas ref="canvas" style={{ border: "1px solid #ddd" }} width={100} height={100} />
+            <canvas ref="canvas" style={{ border: "1px solid #ddd" }} width={this.props.width} height={this.props.height} />
         );
     }
 }

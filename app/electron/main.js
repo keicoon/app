@@ -5,7 +5,7 @@ const ipcMain = electron.ipcMain;
 
 const url = require('url');
 
-const handler = require("handler_zerorpc")();
+const handler = new (require("./handler_zerorpc"))();
 
 let mainWindow;
 
@@ -42,27 +42,25 @@ app.on('ready', () => {
     // @TODO:
     mainWindow.webContents.openDevTools();
 
-    ipcMain.on('req::test_calc', (event, arg) => {
-        const { x, y } = JSON.parse(arg);
+    // ipcMain.on('req::test_calc', (event, arg) => {
+    //     const { x, y } = JSON.parse(arg);
 
-        const z = `${x} + ${y}`;
+    //     const z = `${x} + ${y}`;
 
-        handler.getClient().invoke("calc", z, (error, res) => {
-            if (error) {
-                console.error(error);
-            } else {
-                console.log(res);
-                event.sender.send('res::test_calc', JSON.stringify({ z: res }));
-            }
-        })
-    })
+    //     handler.getClient().invoke('calc', z, (error, res) => {
+    //         if (error) {
+    //             console.error(error);
+    //         } else {
+    //             console.log(res);
+    //             event.sender.send('res::test_calc', JSON.stringify({ z: res }));
+    //         }
+    //     })
+    // })
 
     ipcMain.on('req::test_mnist', (event, arg) => {
-        const { x, y } = JSON.parse(arg);
-
-        const z = `${x} + ${y}`;
-
-        handler.getClient().invoke("eval", z, (error, res) => {
+        const data = arg;
+        
+        handler.getClient().invoke('eval', data, (error, res) => {
             if (error) {
                 console.error(error);
             } else {
