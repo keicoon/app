@@ -9,6 +9,7 @@ class PythonApi(object):
         try:
             return evaluation(text)
         except Exception as e:
+            print(e)
             return 0.0
 
 def main():
