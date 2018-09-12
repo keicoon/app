@@ -10,7 +10,7 @@ class PythonApi(object):
             return evaluation(text)
         except Exception as e:
             print(e)
-            return 0.0
+            return -1.0 # error
 
 def main():
     addr = 'tcp://127.0.0.1:4242'

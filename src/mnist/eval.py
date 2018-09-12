@@ -13,12 +13,12 @@ def preprocessing(data):
     return data
 
 def loadModel(model):
-    path_pretrained_model = './pretrained_mnist_model.pkl'
+    # @TODO: Resolve to relative path
+    path_pretrained_model = '../../src/mnist/pretrained_mnist_model.pkl'
+    # @NOTE: Validate in gpu-mode
     # model.load_state_dict(torch.load(path_pretrained_model))
-    # @Call cpu-mode
     model.load_state_dict(torch.load(path_pretrained_model, map_location=lambda storage, loc: storage))
     model.cpu()
-
     return model
 
 def evaluation(input):
