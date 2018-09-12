@@ -25,3 +25,7 @@ hdiutil attach ./MakeupApp.dmg
 cd ./app/server
 npm run start
 ```
+
+## 데모
+- mnist  
+![](https://github.com/keicoon/pytorch-app/blob/master/images/mnist-demo.png)
